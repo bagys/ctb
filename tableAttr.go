@@ -15,6 +15,18 @@ func WithPrefixTab(Prefix string) TableAttrFunc {
 	}
 }
 
+func WithPrefixContent(Prefix string) TableAttrFunc {
+	return func(t *Table) {
+		t.prefixContent = Prefix
+	}
+}
+
+func WithPrefixDisable(Disable bool) TableAttrFunc {
+	return func(t *Table) {
+		t.prefixDisable = Disable
+	}
+}
+
 func WithSpacing(spacing int) TableAttrFunc {
 	return func(t *Table) {
 		t.SetSpacing(spacing)

@@ -13,32 +13,13 @@ type LineData struct {
 }
 
 type Table struct {
-	/**
-	 * 存放 每段数据最大长度
-	 */
 	contentFieldMaxLen []int
-	/**
-	 * 存放 每行数据
-	 */
-	contentLine [][]LineData
-	/**
-	 * 存放 第一行tab数据
-	 */
-	tab []LineData
-	/**
-	 * 存放 tab的间距
-	 */
-	spacing int
-	/**
-	 * 存放 tab的前缀
-	 */
-	prefixTab string
-	/**
-	 * 存放 每行数据的前缀
-	 */
-	prefixContent string
-
-	prefixDisable bool
+	contentLine        [][]LineData
+	tab                []LineData
+	spacing            int
+	prefixTab          string
+	prefixContent      string
+	prefixDisable      bool
 }
 
 func NewTable(F ...TableAttrFunc) *Table {
@@ -46,11 +27,9 @@ func NewTable(F ...TableAttrFunc) *Table {
 		spacing:       10,
 		prefixTab:     " - ",
 		prefixContent: " * ",
-		prefixDisable: false,
+		prefixDisable: true,
 	}
-
 	TableAttrFuncs(F).Apply(t)
-
 	return t
 }
 
@@ -61,6 +40,10 @@ func (t *Table) SetPrefixTab(Prefix string) *Table {
 
 func (t *Table) SetPrefixContent(Prefix string) {
 	t.prefixContent = Prefix
+}
+
+func (t *Table) SetPrefixDisable(Disable bool) {
+	t.prefixDisable = Disable
 }
 
 func (t *Table) SetSpacing(spacing int) {
@@ -81,10 +64,6 @@ func (t *Table) SetDataAll(data [][]LineData) {
 	}
 }
 
-/**
-初始化列数
-存放每列数据的最大长度
-*/
 func (t *Table) initContentMaxLen() {
 	if len(t.contentLine) == 0 {
 		return
@@ -99,9 +78,7 @@ func (t *Table) initContentMaxLen() {
 func (t *Table) printLine() {
 	for k, contentSlice := range t.contentLine {
 		lineStr := ""
-		// 判断是否有前缀
 		if t.prefixDisable == false {
-			// 判断是否有tab
 			if k == 0 && len(t.tab) > 0 {
 				lineStr += t.prefixTab
 			} else {
@@ -109,7 +86,6 @@ func (t *Table) printLine() {
 			}
 		}
 		for index, val := range contentSlice {
-			// 当列最长 - 当前长度 + 间距
 			space := t.contentFieldMaxLen[index] - len(val.Data) + t.spacing
 			var data string
 			if val.Color == 0 {
@@ -122,7 +98,6 @@ func (t *Table) printLine() {
 				strings.Repeat(" ", space),
 			)
 		}
-
 		fmt.Println(lineStr)
 	}
 }
@@ -142,7 +117,6 @@ func (t *Table) readPrefix() {
 		return
 	}
 	diffLength := len(t.prefixTab) - len(t.prefixContent)
-
 	if diffLength < 0 {
 		t.prefixTab += strings.Repeat(" ", int(math.Abs(float64(diffLength))))
 	} else {
@@ -150,14 +124,11 @@ func (t *Table) readPrefix() {
 	}
 }
 
-/**
- *	打印
- */
+// print
 func (t *Table) Print() {
 	if len(t.tab) > 0 {
 		t.contentLine = append([][]LineData{t.tab}, t.contentLine...)
 	}
-
 	t.initContentMaxLen()
 	t.readData()
 	t.readPrefix()
