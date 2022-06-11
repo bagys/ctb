@@ -1,4 +1,5 @@
 ## Usage
+> go get github.com/bagys/ctb
 
 ```go
 colors := []color.Color{color.Green, color.BgYellow}
