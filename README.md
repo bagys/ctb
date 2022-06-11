@@ -1,7 +1,15 @@
 ## Usage
-> go get github.com/bagys/ctb
+
+```
+go get github.com/bagys/ctb
+```
 
 ```go
+import (
+    "github.com/bagys/ctb"
+    "github.com/gookit/color"
+)
+
 colors := []color.Color{color.Green, color.BgYellow}
 rand.Seed(time.Now().Unix())
 
@@ -27,6 +35,11 @@ t.Print()
 
 
 ```go
+import (
+    "github.com/bagys/ctb"
+    "github.com/gookit/color"
+)
+
 tab := []ctb.LineData{
     {Data: "Host"},
     {Data: "IP"},
@@ -55,12 +68,4 @@ ctb.NewTable(
     ctb.WithTab(tab),
 ).Print()
 ```
-
-
-
-
-
-
-
-
 
