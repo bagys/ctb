@@ -8,7 +8,7 @@ go get github.com/bagys/ctb
 import (
     "fmt"
     "math/rand"
-	"time"
+    "time"
     "github.com/bagys/ctb"
     "github.com/gookit/color"
 )
