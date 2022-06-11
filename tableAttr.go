@@ -1,4 +1,4 @@
-package server
+package ctb
 
 type TableAttrFunc func(t *Table)
 type TableAttrFuncs []TableAttrFunc
